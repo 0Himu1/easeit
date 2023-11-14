@@ -1,0 +1,19 @@
+{
+	"env": {
+		"browser": true,
+		"es2021": true
+	},
+	"extends": "airbnb",
+	"parserOptions": {
+		"ecmaVersion": "latest",
+		"sourceType": "module"
+	},
+	"rules": {
+		"react/react-in-jsx-scope": 0,
+		"linebreak-style": 0,
+		"no-unused-vars": 1,
+		"react/prop-types": 0,
+		"jsx-a11y/control-has-associated-label": 0,
+		"react/button-has-type": 0
+	}
+}
