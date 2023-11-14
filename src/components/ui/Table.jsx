@@ -43,7 +43,7 @@ export default function Table({ mdata, columns }) {
   });
 
   return (
-    <div className="">
+    <div className="w-full">
       <input
         type="text"
         value={filtering}
@@ -105,36 +105,39 @@ export default function Table({ mdata, columns }) {
           ))}
         </tfoot>
       </table>
-      <div className="flex space-x-2 mt-2 justify-end">
-        <button
-          className="flex items-center px-3 py-1.5 bg-indigo-600 text-white font-medium text-base rounded-md"
-          onClick={() => table.setPageIndex(0)}
-        >
-          <FiChevronsLeft className="mr-2" />
-          First Page
+      <div className="flex items-center mt-2 justify-end">
+        <div className="flex items-center text-sm border rounded-md border-indigo-100">
+          <button
+            className="flex items-center px-3 py-1.5 border-r font-medium"
+            onClick={() => table.setPageIndex(0)}
+          >
+            <FiChevronsLeft className="mr-2" />
+            First Page
 
-        </button>
-        <button
-          className="flex items-center px-3 py-1.5 font-medium text-base rounded-md"
-          disabled={!table.getCanPreviousPage()}
-          onClick={() => table.previousPage()}
-        >
-          Previous Page
-        </button>
-        <button
-          className="flex items-center px-3 py-1.5 font-medium text-base rounded-md"
-          disabled={!table.getCanNextPage()}
-          onClick={() => table.nextPage()}
-        >
-          Next Page
-        </button>
-        <button
-          className="flex items-center px-3 py-1.5 bg-indigo-600 text-white font-medium text-base rounded-md"
-          onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-        >
-          Last Page
-          <FiChevronsRight className="ml-2" />
-        </button>
+          </button>
+          <button
+            className="flex items-center px-3 py-1.5 border-r font-medium"
+            disabled={!table.getCanPreviousPage()}
+            onClick={() => table.previousPage()}
+          >
+            Previous Page
+          </button>
+          <button
+            className="flex items-center px-3 py-1.5 border-r font-medium"
+            disabled={!table.getCanNextPage()}
+            onClick={() => table.nextPage()}
+          >
+            Next Page
+          </button>
+          <button
+            className="flex items-center px-3 py-1.5 border-r font-medium"
+            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+          >
+            Last Page
+            <FiChevronsRight className="ml-2" />
+          </button>
+        </div>
+
       </div>
     </div>
   );

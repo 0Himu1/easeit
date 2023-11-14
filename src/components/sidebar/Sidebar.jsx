@@ -9,12 +9,15 @@ import { BiUserCircle } from 'react-icons/bi';
 import { IoIosHelpCircleOutline } from 'react-icons/io';
 import { CiSettings } from 'react-icons/ci';
 // eslint-disable-next-line import/no-cycle
+import { useLocation } from 'react-router-dom';
 import SidebarItem from './SidebarItem';
 import logosm from './Solution Provider .webp';
 import logo from './Solution Provider.jpg';
 
 export default function Sidebar() {
   const [expanded, setExpanded] = useState(true);
+  const location = useLocation();
+  console.log();
   return (
     <aside className="h-screen">
       <nav className="h-full flex flex-col bg-white border-r shadow-sm">
@@ -27,13 +30,13 @@ export default function Sidebar() {
         </div>
 
         <ul className="flex-1 px-3">
-          <SidebarItem link="dashboard" expanded={expanded} icon={<BsBarChartLine />} text="Dashboard" active />
-          <SidebarItem link="announsment" expanded={expanded} icon={<BiUserCircle />} text="Announcements" />
-          <SidebarItem link="sales" expanded={expanded} icon={<BsBoxes />} text="Sales Commission" alart />
-          <SidebarItem link="leads" expanded={expanded} icon={<BsPeople />} text="Leads" />
+          <SidebarItem link="dashboard" expanded={expanded} icon={<BsBarChartLine />} text="Dashboard" active={location.pathname.includes('dashboard')} />
+          <SidebarItem link="announsment" expanded={expanded} icon={<BiUserCircle />} text="Announcements" active={location.pathname.includes('announsment')} />
+          <SidebarItem link="sales" expanded={expanded} icon={<BsBoxes />} text="Sales Commission" alart active={location.pathname.includes('sales')} />
+          <SidebarItem link="leads" expanded={expanded} icon={<BsPeople />} text="Leads" active={location.pathname.includes('leads')} />
           <hr className="my-3" />
-          <SidebarItem link="settings" expanded={expanded} icon={<CiSettings />} text="Settings" />
-          <SidebarItem link="help" expanded={expanded} icon={<IoIosHelpCircleOutline />} text="Help" />
+          <SidebarItem link="settings" expanded={expanded} icon={<CiSettings />} text="Settings" active={location.pathname.includes('settings')} />
+          <SidebarItem link="help" expanded={expanded} icon={<IoIosHelpCircleOutline />} text="Help" active={location.pathname.includes('help')} />
         </ul>
 
         <div className="border-t flex p-3">

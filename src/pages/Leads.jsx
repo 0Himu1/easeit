@@ -73,7 +73,7 @@ export default function Leads() {
           </div>
         </div>
 
-        <div className="table">
+        <div className="table w-full">
           <Table columns={columns} mdata={mdata} />
         </div>
       </div>

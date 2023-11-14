@@ -14,6 +14,10 @@ import Leads from './pages/Leads';
 import Settings from './pages/Settings';
 import Help from './pages/Help';
 import LoginLayout from './pages/layout/LoginLayout';
+import SettingsLayout from './pages/layout/SettingsLayout';
+import General from './pages/settings/General';
+import Account from './pages/settings/Account';
+import FacebookLead from './pages/settings/FacebookLead';
 
 export default function App() {
   const { auth } = useAuth();
@@ -36,7 +40,11 @@ export default function App() {
             <Route path="announsment" element={<Announcements />} />
             <Route path="sales" element={<Sales />} />
             <Route path="leads" element={<Leads />} />
-            <Route path="settings" element={<Settings />} />
+            <Route path="settings" element={<SettingsLayout />}>
+              <Route path="general" element={<General />} />
+              <Route path="account" element={<Account />} />
+              <Route path="facebook_lead" element={<FacebookLead />} />
+            </Route>
             <Route path="help" element={<Help />} />
           </Route>
         </Route>
