@@ -27,14 +27,14 @@ export default function App() {
       <Route path="/" element={<RootLayout />}>
 
         {/* Logget out routes */}
-        <Route path="/*" element={<LoggedOutRoute />}>
+        <Route path="/" element={<LoggedOutRoute />}>
           <Route path="authentication" element={<LoginLayout />}>
             <Route path="login" element={<Login />} />
           </Route>
         </Route>
 
         {/* User Routes */}
-        <Route path="/*" element={<LoggedInRoute />}>
+        <Route path="/" element={<LoggedInRoute />}>
           <Route path="admin" element={<AdminLayout />}>
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="announsment" element={<Announcements />} />
