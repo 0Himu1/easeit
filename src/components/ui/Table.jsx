@@ -10,17 +10,6 @@ import {
 import { FiChevronsLeft, FiChevronsRight } from 'react-icons/fi';
 import { useMemo, useState } from 'react';
 
-/*
-  {
-      "id": 1,
-      "first_name": "Rey",
-      "last_name": "Macvey",
-      "email": "rmacvey0@fc2.com",
-      "gender": "Female",
-      "ip_address": "17.107.8.45"
-    }
-  */
-
 export default function Table({ mdata, columns }) {
   const [sorting, setSorting] = useState([]);
   const [filtering, setFiltering] = useState('');

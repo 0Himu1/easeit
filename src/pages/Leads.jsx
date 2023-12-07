@@ -1,6 +1,7 @@
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable no-tabs */
 /* eslint-disable max-len */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlinePlus, AiOutlineUpload, AiOutlineBarChart } from 'react-icons/ai';
 import { PiDotsSixVerticalBold } from 'react-icons/pi';
 import { HiOutlineRefresh } from 'react-icons/hi';
@@ -8,22 +9,35 @@ import { CiSearch } from 'react-icons/ci';
 import Dropdown from '../components/ui/Dropdown';
 import Table from '../components/ui/Table';
 import mdata from '../data/dummyData.json';
+import { useGetLeadsQuery } from '../features/leads/leadsAPI';
+import StatusDropdowns from '../components/StatusDropdowns';
 
 export default function Leads() {
+  const [leads, setLeads] = useState([]);
+  const { data, isSuccess } = useGetLeadsQuery();
   const columns = [
-    { header: 'Lead ID', accessorKey: 'lead_id', footer: 'Lead ID' },
+    { header: 'Lead ID', accessorKey: 'id', footer: 'Lead ID' },
+    { header: 'Name', accessorKey: 'name', footer: 'Name' },
+    { header: 'Date', accessorKey: 'date', footer: 'Date' },
+    { header: 'Phone', accessorKey: 'phone', footer: 'Phone' },
+    { header: 'Work Scope', accessorKey: 'work_scope', footer: 'Work Scope' },
+    { header: 'Asigned CRE', accessorKey: 'asigned_by', footer: 'Asigned CRE' },
+    { header: 'Remark', accessorKey: 'work_scope', footer: 'Remark' },
     {
-      header: 'Name',
-      accessorFn: (row) => `${row.first_name} ${row.last_name}`,
-      footer: 'Name',
+      header: 'Status',
+      accessorKey: 'status',
+      cell: (info) => <StatusDropdowns status={info.getValue()} />,
+      footer: 'Status',
     },
-    { header: 'Age', accessorKey: 'age', footer: 'Age' },
-    { header: 'Email', accessorKey: 'email', footer: 'Email' },
-    { header: 'Country', accessorKey: 'country', footer: 'Country' },
-    { header: 'Postal Code', accessorKey: 'postal_code', footer: 'Postal Code' },
-    { header: 'Color', accessorKey: 'favorite_color', footer: 'Color' },
-    { header: 'Last Purchase Date', accessorKey: 'last_purchase_date', footer: 'Last Purchase Date' },
   ];
+
+  useEffect(() => {
+    if (data?.length > 0) {
+      setLeads(data);
+    }
+  }, [isSuccess]);
+
+  console.log(isSuccess, leads);
 
   return (
     <div className="bg-indigo-50 w-full px-3">
