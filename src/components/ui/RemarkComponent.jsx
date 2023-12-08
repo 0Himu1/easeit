@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import { AiOutlineUpload } from 'react-icons/ai';
+import Textarea from './Textarea';
 
 export default function RemarkComponent({ register, setValue }) {
   const fileInputRef = useRef(null);
@@ -18,15 +19,13 @@ export default function RemarkComponent({ register, setValue }) {
 
   return (
     <>
-      <div className="mt-4">
-        <p className="text-base font-medium">Remark</p>
-        <textarea
-          {...register('remark')}
-          className="block text-xs w-96 mt-1 p-2 border rounded-md focus:outline-none focus:border-indigo-300"
-          rows="4"
-          placeholder="Enter your remark here..."
-        />
-      </div>
+      <Textarea
+        title="Remark"
+        fieldName="remark"
+        register={register}
+        placeholder="Enter remarks here..."
+        rows={4}
+      />
 
       <div className="mt-4 w-full">
         <div className="flex items-center w-full">

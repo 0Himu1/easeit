@@ -11,6 +11,7 @@ import Table from '../components/ui/Table';
 import mdata from '../data/dummyData.json';
 import { useGetLeadsQuery } from '../features/leads/leadsAPI';
 import StatusDropdowns from '../components/StatusDropdowns';
+import AddnewLeadButton from '../components/buttons/AddnewLeadButton';
 
 export default function Leads() {
   const [leads, setLeads] = useState([]);
@@ -42,10 +43,7 @@ export default function Leads() {
   return (
     <div className="bg-indigo-50 w-full px-3">
       <div className="flex justify-start items-center py-4 space-x-2">
-        <button className="flex items-center px-3 py-1.5 bg-indigo-600 text-white font-medium text-base rounded-md">
-          <AiOutlinePlus />
-          New Leads
-        </button>
+        <AddnewLeadButton />
         <button className="flex items-center px-3 py-1.5 bg-indigo-600 text-white font-medium text-base rounded-md">
           <AiOutlineUpload />
           New Leads
