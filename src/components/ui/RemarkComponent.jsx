@@ -14,7 +14,7 @@ export default function RemarkComponent({ register, setValue }) {
     const files = Array.from(e.target.files);
 
     // Set the value of the 'fileInput' field using React Hook Form
-    setValue('fileInput', files);
+    setValue('images', files);
   };
 
   return (
@@ -38,7 +38,7 @@ export default function RemarkComponent({ register, setValue }) {
             Upload Files
           </button>
           <input
-            {...register('fileInput')}
+            {...register('images')}
             type="file"
             ref={fileInputRef}
             style={{ display: 'none' }}

@@ -38,8 +38,6 @@ export default function Leads() {
     }
   }, [isSuccess]);
 
-  console.log(isSuccess, leads);
-
   return (
     <div className="bg-indigo-50 w-full px-3">
       <div className="flex justify-start items-center py-4 space-x-2">

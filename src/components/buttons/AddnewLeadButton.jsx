@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+/* eslint-disable no-underscore-dangle */
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoClose } from 'react-icons/io5';
@@ -6,16 +7,48 @@ import RemarkComponent from '../ui/RemarkComponent';
 import Dropdown from '../ui/Dropdown';
 import Input from '../ui/Input';
 import Textarea from '../ui/Textarea';
+import { useAddCommentMutation, useAddLeadsMutation } from '../../features/leads/leadsAPI';
 
 export default function AddnewLeadButton() {
   const [modal, setModal] = useState(false);
+  const [addLeads, { isSuccess }] = useAddLeadsMutation();
+  const [addComment] = useAddCommentMutation();
   const {
     register, handleSubmit, setValue, formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log('Form Data:', data);
-    setModal(false); // Close the modal on submit
+  const onSubmit = async (data) => {
+    try {
+      const response = await addLeads(data);
+
+      // console.log(data);
+      const commentData = {
+        creName: data.creName,
+        remark: data.remark,
+        images: data.images,
+      };
+      const leadID = response.data.lead._id;
+
+      console.log(commentData, leadID);
+
+      const res = await addComment({ data: commentData, id: leadID });
+      console.log(res);
+
+      // const commentRes = await addComment({
+      //   data: {
+      //     creName: data.creName,
+      //     remark: data.remark,
+      //     images: data.images,
+      //   },
+      //   id: response.data.lead._id,
+      // });
+
+      // console.log(commentRes);
+      // setModal(false); // Close the modal on submit
+    } catch (error) {
+      // Handle errors
+      console.error('Error submitting form:', error);
+    }
   };
 
   return (
@@ -73,7 +106,7 @@ export default function AddnewLeadButton() {
                     'Tanjin',
                   ]}
                   setValue={setValue}
-                  fieldName="assignedCRE"
+                  fieldName="creName"
                 />
               </div>
             </div>
@@ -177,6 +210,7 @@ export default function AddnewLeadButton() {
                   register={register}
                   type="time"
                 />
+
                 {/* Meeting Date  */}
                 <Input
                   title="Date"

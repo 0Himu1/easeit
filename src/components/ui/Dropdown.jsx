@@ -36,7 +36,7 @@ export default function Dropdown({
           {value || 'Select Options'}
         </div>
         <div onClick={toggling} className="relative">
-          <button className="pr-2 hover:text-gray-700 inline-flex h-full items-center justify-center rounded-r-md border border-gray-50 text-gray-600 hover:bg-gray-50">
+          <button type="button" className="pr-2 hover:text-gray-700 inline-flex h-full items-center justify-center rounded-r-md border border-gray-50 text-gray-600 hover:bg-gray-50">
             {isOpen ? <BsChevronUp /> : <BsChevronDown />}
           </button>
         </div>
