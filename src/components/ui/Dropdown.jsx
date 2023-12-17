@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+/* eslint-disable react/no-array-index-key */
+import React, { useEffect, useState } from 'react';
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 
 export default function Dropdown({
   defaultOptions, fieldName, setValue, showAddOption,
 }) {
-  const [options, setOptions] = useState(defaultOptions);
+  const [options, setOptions] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const [value, setValueInternal] = useState(null);
   const [newOption, setNewOption] = useState('');
@@ -12,6 +13,10 @@ export default function Dropdown({
   const toggling = () => {
     setIsOpen(!isOpen);
   };
+
+  useEffect(() => {
+    setOptions(defaultOptions);
+  }, [defaultOptions]);
 
   const optionClicked = (selectedValue) => {
     setValue(fieldName, selectedValue);
@@ -45,7 +50,7 @@ export default function Dropdown({
             <div>
               {options.map((o) => (
                 <div
-                  key={o}
+                  key={`${o}`}
                   onClick={() => optionClicked(o)}
                   className="block rounded-lg px-4 py-2 text-sm text-gray-500 no-underline hover:bg-gray-50"
                 >

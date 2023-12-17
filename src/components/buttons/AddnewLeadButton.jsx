@@ -14,37 +14,27 @@ export default function AddnewLeadButton() {
   const [addLeads, { isSuccess }] = useAddLeadsMutation();
   const [addComment] = useAddCommentMutation();
   const {
-    register, handleSubmit, setValue, formState: { errors },
+    register, handleSubmit, setValue, reset, formState: { errors },
   } = useForm();
 
   const onSubmit = async (data) => {
     try {
       const response = await addLeads(data);
-
-      // console.log(data);
-      const commentData = {
-        creName: data.creName,
-        remark: data.remark,
-        images: data.images,
-      };
       const leadID = response.data.lead._id;
 
-      console.log(commentData, leadID);
+      if (data.remark) {
+        const commentData = {
+          creName: data.creName,
+          remark: data.remark,
+          images: data.images,
+        };
 
-      const res = await addComment({ data: commentData, id: leadID });
-      console.log(res);
+        const res = await addComment({ data: commentData, id: leadID });
+        console.log(res.data);
+      }
 
-      // const commentRes = await addComment({
-      //   data: {
-      //     creName: data.creName,
-      //     remark: data.remark,
-      //     images: data.images,
-      //   },
-      //   id: response.data.lead._id,
-      // });
-
-      // console.log(commentRes);
-      // setModal(false); // Close the modal on submit
+      setModal(false); // Close the modal on submit
+      reset();
     } catch (error) {
       // Handle errors
       console.error('Error submitting form:', error);
@@ -131,7 +121,6 @@ export default function AddnewLeadButton() {
                   fieldName="phone"
                   register={register}
                   validation={{
-                    required: 'Phone number is required',
                     pattern: {
                       value: /^[0-9]{11}$/,
                       message: 'Invalid phone number format',

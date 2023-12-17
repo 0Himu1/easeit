@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable no-tabs */
 /* eslint-disable max-len */
@@ -6,37 +7,66 @@ import { AiOutlinePlus, AiOutlineUpload, AiOutlineBarChart } from 'react-icons/a
 import { PiDotsSixVerticalBold } from 'react-icons/pi';
 import { HiOutlineRefresh } from 'react-icons/hi';
 import { CiSearch } from 'react-icons/ci';
+import { createColumnHelper } from '@tanstack/react-table';
 import Dropdown from '../components/ui/Dropdown';
 import Table from '../components/ui/Table';
-import mdata from '../data/dummyData.json';
-import { useGetLeadsQuery } from '../features/leads/leadsAPI';
-import StatusDropdowns from '../components/StatusDropdowns';
 import AddnewLeadButton from '../components/buttons/AddnewLeadButton';
+import { useGetLeadsQuery } from '../features/leads/leadsAPI';
+import NameComponent from '../components/table components/NameComponenet';
+import CommentComponent from '../components/table components/Comment Component';
+import StatusDropdowns from '../components/table components/StatusDropdowns';
+import DateToolTip from '../components/ui/DateToolTip';
+import Source from '../components/table components/Source';
+import WorkScope from '../components/table components/WorkScope';
 
 export default function Leads() {
-  const [leads, setLeads] = useState([]);
-  const { data, isSuccess } = useGetLeadsQuery();
-  const columns = [
-    { header: 'Lead ID', accessorKey: 'id', footer: 'Lead ID' },
-    { header: 'Name', accessorKey: 'name', footer: 'Name' },
-    { header: 'Date', accessorKey: 'date', footer: 'Date' },
-    { header: 'Phone', accessorKey: 'phone', footer: 'Phone' },
-    { header: 'Work Scope', accessorKey: 'work_scope', footer: 'Work Scope' },
-    { header: 'Asigned CRE', accessorKey: 'asigned_by', footer: 'Asigned CRE' },
-    { header: 'Remark', accessorKey: 'work_scope', footer: 'Remark' },
-    {
-      header: 'Status',
-      accessorKey: 'status',
-      cell: (info) => <StatusDropdowns status={info.getValue()} />,
-      footer: 'Status',
-    },
-  ];
+  const columnHelper = createColumnHelper();
+  const { data: leads } = useGetLeadsQuery();
 
-  useEffect(() => {
-    if (data?.length > 0) {
-      setLeads(data);
-    }
-  }, [isSuccess]);
+  const columns = [
+    columnHelper.accessor('', {
+      id: 'S.No',
+      cell: (info) => <p className="text-sm text-blue-600">{info.row.index + 1}</p>,
+      header: 'S.No',
+    }),
+    columnHelper.accessor('createdAt', {
+      cell: (info) => <DateToolTip dateString={info.row.original?.createdAt} />,
+      header: 'Created',
+    }),
+    columnHelper.accessor('CID', {
+      cell: (info) => <span>{info.row.original?.CID}</span>,
+      header: 'CID',
+    }),
+    columnHelper.accessor('name', {
+      cell: (info) => <NameComponent _id={info.row.original?._id} name={info.row.original?.name} />,
+      header: 'Name',
+    }),
+
+    columnHelper.accessor('phone', {
+      cell: (info) => <span className="text-sm text-gray-600">{info.row.original?.phone}</span>,
+      header: 'Phone',
+    }),
+    columnHelper.accessor('source', {
+      cell: (info) => <Source source={info.row.original?.source} />,
+      header: 'Source',
+    }),
+    columnHelper.accessor('workScope', {
+      cell: (info) => <WorkScope scopes={[info.row.original?.workScope]} />,
+      header: 'Work Scope',
+    }),
+    columnHelper.accessor('creName', {
+      cell: (info) => <span>{info.row.original?.creName}</span>,
+      header: 'CRE Name',
+    }),
+    columnHelper.accessor('comment', {
+      cell: (info) => <CommentComponent commentData={info.row.original?.comment[0]} />,
+      header: 'Remark',
+    }),
+    columnHelper.accessor('status', {
+      cell: (info) => <StatusDropdowns _id={info.row.original?._id} status={info.row.original?.status} />,
+      header: 'Status',
+    }),
+  ];
 
   return (
     <div className="bg-indigo-50 w-full px-3">
@@ -84,7 +114,9 @@ export default function Leads() {
         </div>
 
         <div className="table w-full">
-          <Table columns={columns} mdata={mdata} />
+          {leads?.length > 0 && (
+          <Table columns={columns} data={leads} />
+          )}
         </div>
       </div>
     </div>

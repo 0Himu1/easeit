@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 import axios from 'axios';
 import apiSlice from '../api/apiSlice';
 
@@ -5,10 +6,8 @@ const leadsAPI = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getLeads: builder.query({
       query: () => '/lead',
+      providesTags: ['allLeads'],
     }),
-
-    // addLeads: builder.mutation({
-    //   query: ({
     //     time, date, remark, images, creName,
     //     phone, name, address, status, visitCharge,
     //     projectStatus, projectLocation, workScope, source, positive,
@@ -67,9 +66,8 @@ const leadsAPI = apiSlice.injectEndpoints({
         url: '/lead',
         method: 'POST',
         body: data,
-      })
-
-      ,
+      }),
+      invalidatesTags: ['allLeads'],
     }),
 
     addComment: builder.mutation({
@@ -77,9 +75,13 @@ const leadsAPI = apiSlice.injectEndpoints({
         try {
           const formData = new FormData();
 
-          formData.append('images', data.images[0]);
-          formData.append('images', data.images[1]);
-          formData.append('images', data.images[2]);
+          if (data.images && data.images.length > 0) {
+            // If images are present, append them to the FormData
+            for (const image of data.images) {
+              formData.append('images', image);
+            }
+          }
+
           formData.append('creName', data.creName);
           formData.append('remark', data.remark);
 
@@ -93,17 +95,19 @@ const leadsAPI = apiSlice.injectEndpoints({
           return { data: response };
         } catch (error) {
           console.log(error);
-          return { error: 'some error occered' };
+          return { error: 'some error occurred' };
         }
       },
     }),
+
     updateLeads: builder.mutation({
-      query: (data) => ({
-        url: '/lead',
+      query: ({ data, id }) => ({
+        url: `/lead/${id}`,
         method: 'PUT',
         body: data,
       }),
     }),
+
     deleteLeads: builder.mutation({
       query: (id) => ({
         url: `/lead/${id}`,

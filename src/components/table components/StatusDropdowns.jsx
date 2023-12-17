@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
-import MessegeReschedule from './Modals/Lead/MessegeReschedule';
-import NoResponse from './Modals/Lead/NoResponse';
-import NeedSupport from './Modals/Lead/NeedSupport';
-import NumberCollected from './Modals/Lead/NumberCollected';
-import CallRescheduled from './Modals/Lead/CallRescheduled';
-import FutureClient from './Modals/Lead/FutureClient';
-import MeetingFixed from './Modals/Lead/MeetingFixed';
-import MeetingReschedule from './Modals/Lead/MeetingReschedule';
-import CancelMetting from './Modals/Lead/CancelMetting';
+import MessegeReschedule from '../Modals/Lead/MessegeReschedule';
+import NoResponse from '../Modals/Lead/NoResponse';
+import NeedSupport from '../Modals/Lead/NeedSupport';
+import NumberCollected from '../Modals/Lead/NumberCollected';
+import CallRescheduled from '../Modals/Lead/CallRescheduled';
+import FutureClient from '../Modals/Lead/FutureClient';
+import MeetingFixed from '../Modals/Lead/MeetingFixed';
+import MeetingReschedule from '../Modals/Lead/MeetingReschedule';
+import CancelMetting from '../Modals/Lead/CancelMetting';
 
 const getstyleClasses = (value) => {
   let styleClass = '';
